@@ -1,3 +1,21 @@
 # !/bin/bash
 require '../lib/Display'
-Display.start
+
+var = "start"
+while var != "exit"
+    
+    case var
+    when "start"
+        var = Display.start
+    when "show_option"
+        var = Display.show_option
+    when "add_contact"
+        puts "Please Re-enter the informations","\n"
+        var = Display.add_contact
+    when "edit_contact"
+        var = Display.edit_contact
+    when "delete_contact"
+        puts "Option out of range","\n"
+        var = Display.delete_contact
+    end
+end

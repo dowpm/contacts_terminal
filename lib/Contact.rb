@@ -25,7 +25,7 @@ class Contact
 
     def self.add_all_contacts(json)
         all_contacts.clear
-        return if json.empty?
+        return if json == nil or json.empty?
         contacts = JSON.parse(json)
         contacts.each do |contact|
             new(contact).tap {|contact| all_contacts << contact}
