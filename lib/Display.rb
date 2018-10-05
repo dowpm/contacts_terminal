@@ -61,10 +61,18 @@ class Display
                 puts " You have no contact to edit yet","\n","Choose an option:"
                 self.show_option
             end
+            system "clear" or system "cls"
             self.edit_contact
         when 5
             self.delete_contact
         when 0, 6
+            puts "Do you really want to exit (Y/N)"
+            exi = gets.strip.upcase
+            if exi == "N" or exi == "NO"
+                # system "clear" or system "cls"
+                # puts "Choose an option:"
+                self.start
+            end
             puts "Byeeeeeee"
             self.save_contacts(Contact.to_json)
             exit
@@ -101,7 +109,7 @@ class Display
 
     def self.edit_contact
         info, correct = [], ""
-        system "clear" or system "cls"
+        
         puts "Choose the contact to edite:","** You can type !q to back to the menu **",Contact.show_contacts_choosen,"\n"
         index = gets.strip
         if index.upcase == "!Q"
@@ -110,10 +118,14 @@ class Display
         end
         index = index.to_i
         if index < 1 or index > (Contact.count_contacts)
+            system "clear" or system "cls"
             self.edit_contact
         end
-        EDITCONTACTSTAPE.each do |stape|
-            puts stape
+        data = [Contact.all_contacts[index-1].firstname,Contact.all_contacts[index-1].lastname,Contact.all_contacts[index-1].email,Contact.all_contacts[index-1].address,
+        Contact.all_contacts[index-1].tel]
+        EDITCONTACTSTAPE.each.with_index do |stape, i|
+            
+            puts "#{stape} for (#{data[i]})"
             inf = gets.strip
             self.start if inf.upcase == "!Q"
             info << inf
@@ -129,7 +141,10 @@ class Display
             end
         end
         system "clear" or system "cls"
-        self.edit_contact if correct == "N" or correct == "NO"
+        if correct == "N" or correct == "NO"
+            system "clear" or system "cls"
+            self.edit_contact
+        end
         puts Contact.edit_contact(index,info) if correct == "Y" or correct == "YES"
         puts "Choose an option:","\n"
         self.show_option
@@ -150,6 +165,11 @@ class Display
         end
         opt = opt.to_i
         if opt < 1 or opt > Contact.count_contacts
+            self.delete_contact
+        end
+        puts "Are you sure? (Y/N)"
+        ch = gets.strip.upcase
+        if ch == "N" or ch == "NO"
             self.delete_contact
         end
         system "clear" or system "cls"

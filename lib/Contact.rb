@@ -14,11 +14,17 @@ class Contact
 
     def initialize(info)
         @firstname, @lastname, @email, @address, @tel = info[0].capitalize,info[1].capitalize,info[2],info[3],info[4]
-        self.class.all_contacts << self
+        # self.class.all_contacts << self
+    end
+
+    def add_all_to_all(info)
+        contact = self.new(info)
+        contact.class.all_contacts << contact
     end
 
     def self.add_contact(info)
-        self.new(info)
+        c = self.new(info)
+        c.class.all_contacts << self
         "#{info[0]} #{info[1]} succefuly add to your contact"
     end
 
@@ -26,7 +32,10 @@ class Contact
         self.all_contacts.clear
         return if json.empty?
         contacts = JSON.parse(json)
-        contacts.each { |contact| self.new(contact)  }
+        contacts.each { |contact| 
+            c =self.new(contact)  
+            c.class.all_contacts << c
+        }
     end
 
     def self.show_contacts_choosen
@@ -47,12 +56,13 @@ class Contact
     def self.edit_contact(index, info)
         person = self.new(info)
         self.all_contacts[index-1] = person
-        "#{info[0]} #{info[1]} has been succefuly edite in your contact"
+        "#{info[0]} #{info[1]} has been succefuly edited in your contact"
     end
 
     def self.delete_contact(index)
+        fname, lname = self.all_contacts[index-1].firstname, self.all_contacts[index-1].lastname # added
         self.all_contacts.delete_at(index-1)
-        "Contact has been succefuly delete in your contact"
+        "#{fname} #{lname} has been succefuly deleted in your contact" #modifed
     end
 
     def self.to_json
