@@ -1,5 +1,5 @@
 # !/bin/bash
-require '../lib/Display'
+require_relative '../lib/Display'
 
 var = "start"
 while var != "exit"

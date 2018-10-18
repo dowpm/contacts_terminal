@@ -1,4 +1,4 @@
-require '../lib/Contact'
+require_relative '../lib/Contact'
 require 'terminal-table'
 
 class Display
