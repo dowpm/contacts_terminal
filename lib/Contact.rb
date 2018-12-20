@@ -20,7 +20,7 @@ class Contact
     def self.add_contact(info)
         new(info).tap {|contact| all_contacts << contact}
         # c.class.all_contacts << self
-        "#{info[0]} #{info[1]} succefuly add to your contact"
+        "#{info[0]} #{info[1]} successfully add to your contact"
     end
 
     def self.add_all_contacts(json)

@@ -1,4 +1,4 @@
-# !/bin/bash
+#!/usr/bin/env ruby
 require_relative '../lib/Display'
 
 var = "start"
